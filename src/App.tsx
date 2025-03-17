@@ -1,17 +1,11 @@
 import { useEffect } from 'react';
 import './App.css';
 
-
-interface ApiResponse {
-  key1: string;
-  key2: number;
-}
-
 function App() {
   const makeAPICall = async (): Promise<void> => {
     try {
-      const response = await fetch('http://localhost:8080/', { mode: 'cors' });
-      const data: ApiResponse = await response.json();
+      const response = await fetch('http://localhost:8080/guest', { mode: 'cors' });
+      const data = await response.json();
       console.log({ data });
     } catch (e) {
       console.error(e);
