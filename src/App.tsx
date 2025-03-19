@@ -13,7 +13,7 @@ function App() {
 
   const makeAPICall = async (): Promise<void> => {
     try {
-      const response = await fetch('http://localhost:8080/guest', { mode: 'cors' });
+      const response = await fetch('http://localhost:3000/guest', { mode: 'cors' });
       const data = await response.json();
       console.log(data);
 
