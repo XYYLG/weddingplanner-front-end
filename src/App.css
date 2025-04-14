@@ -14,7 +14,7 @@ body {
 }
 
 .guests-container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   background: #fff;
   border-radius: 8px;
@@ -184,5 +184,29 @@ button:hover {
 }
 
 .add-guest-btn i {
+  pointer-events: none;
+}
+
+.edit-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2em;
+  margin-right: 5px;
+}
+
+.edit-btn:hover {
+  background-color: #45a049;
+}
+
+.edit-btn i {
   pointer-events: none;
 }
