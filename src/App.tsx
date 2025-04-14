@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [guests, setGuests] = useState([]);
+  const [guests, setGuests] = useState<
+    { id: string; firstName: string; lastName: string; phoneNumber: string; address: string }[]
+  >([]);
 
   const [newGuest, setNewGuest] = useState({
     firstName: '',
@@ -16,10 +18,11 @@ function App() {
   const makeAPICall = async (): Promise<void> => {
     try {
       const response = await fetch('http://localhost:3000/guest', { mode: 'cors' });
+      if (!response.ok) throw new Error('Fout bij ophalen van gegevens!');
       const data = await response.json();
       setGuests(data);
     } catch (e) {
-      console.error(e);
+      console.error('Fout bij ophalen van gegevens:', e);
     }
   };
 
@@ -37,13 +40,11 @@ function App() {
         },
         body: JSON.stringify(guest),
       });
-
-      if (response.ok) {
-        makeAPICall();
-        setShowForm(false);
-      }
+      if (!response.ok) throw new Error('Fout bij aanmaken van gast!');
+      makeAPICall();
+      setShowForm(false);
     } catch (error) {
-      console.error('Netwerkfout:', error);
+      console.error('Netwerkfout bij het aanmaken van gast:', error);
     }
   };
 
@@ -55,15 +56,11 @@ function App() {
           'Content-Type': 'application/json',
         },
       });
-
-      if (response.ok) {
-        console.log(`Gast met ID ${id} succesvol verwijderd`);
-        makeAPICall();
-      } else {
-        console.error(`Fout bij het verwijderen van gast met ID ${id}`);
-      }
+      if (!response.ok) throw new Error('Fout bij verwijderen van gast!');
+      console.log(`Gast met ID ${id} succesvol verwijderd`);
+      makeAPICall();
     } catch (error) {
-      console.error('Netwerkfout:', error);
+      console.error('Netwerkfout bij verwijderen van gast:', error);
     }
   };
 
@@ -74,8 +71,12 @@ function App() {
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await createGuest(newGuest);
-    setNewGuest({ firstName: '', lastName: '', phoneNumber: '', address: '' });
+    if (newGuest.firstName && newGuest.lastName && newGuest.phoneNumber && newGuest.address) {
+      await createGuest(newGuest);
+      setNewGuest({ firstName: '', lastName: '', phoneNumber: '', address: '' });
+    } else {
+      console.error('Alle velden zijn verplicht!');
+    }
   };
 
   useEffect(() => {
@@ -85,7 +86,6 @@ function App() {
   return (
     <div className="guests-container">
       <h1>Gasten Overzicht</h1>
-      <button onClick={() => setShowForm(true)}>Create Gast</button>
       {showForm && (
         <div className="modal">
           <div className="modal-content">
@@ -124,13 +124,25 @@ function App() {
                 required
               />
               <button type="submit">Opslaan</button>
-              <button type="button" onClick={() => setShowForm(false)}>Annuleren</button>
+              <button type="button" onClick={() => setShowForm(false)}>
+                Annuleren
+              </button>
             </form>
           </div>
         </div>
       )}
       <table>
         <thead>
+          <tr>
+            <th colSpan={5}>
+              <div className="table-header">
+                <button className="add-guest-btn" onClick={() => setShowForm(true)}>
+                  {/* Plus-icoon van Font Awesome */}
+                  <i className="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </th>
+          </tr>
           <tr>
             <th>Voornaam</th>
             <th>Achternaam</th>
@@ -140,25 +152,15 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {guests.map((guest: any, index) => (
-            <tr key={index}>
+          {guests.map((guest) => (
+            <tr key={guest.id}>
               <td>{guest.firstName}</td>
               <td>{guest.lastName}</td>
               <td>{guest.phoneNumber}</td>
               <td>{guest.address}</td>
               <td>
-                <button
-                  onClick={() => deleteGuest(guest.id)}
-                  style={{
-                    backgroundColor: '#f44336',
-                    color: 'white',
-                    border: 'none',
-                    padding: '5px 10px',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Delete
+                <button className="delete-btn" onClick={() => deleteGuest(guest.id)}>
+                  Gast verwijderen
                 </button>
               </td>
             </tr>

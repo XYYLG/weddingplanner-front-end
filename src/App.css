@@ -3,7 +3,6 @@ body {
   background-color: #f9f9f9;
   color: #333;
   margin: 0;
-  padding: 20px;
 }
 
 #root,
@@ -15,7 +14,8 @@ body {
 }
 
 .guests-container {
-  max-width: 800px;
+  max-width: 1200px;
+  /* Vergeten "px" toegevoegd */
   margin: 0 auto;
   background: #fff;
   border-radius: 8px;
@@ -131,4 +131,64 @@ button:hover {
 
 .modal-content button[type="button"]:hover {
   background-color: #e53935;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 1em;
+}
+
+.delete-btn:hover {
+  background-color: #e53935;
+}
+
+.add-guest-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.add-guest-btn:hover {
+  background-color: #45a049;
+}
+
+.table-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+.add-guest-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.add-guest-btn:hover {
+  background-color: #45a049;
+}
+
+.add-guest-btn i {
+  pointer-events: none;
+  /* Voorkomt hover-effect op het icoon zelf */
 }
