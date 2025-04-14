@@ -188,7 +188,7 @@ button:hover {
 }
 
 .edit-btn {
-  background-color: #4CAF50;
+  background-color: #ffa500;
   color: white;
   border: none;
   padding: 5px;
@@ -204,7 +204,7 @@ button:hover {
 }
 
 .edit-btn:hover {
-  background-color: #45a049;
+  background-color: #ffa500;
 }
 
 .edit-btn i {
