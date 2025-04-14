@@ -137,7 +137,6 @@ function App() {
             <th colSpan={5}>
               <div className="table-header">
                 <button className="add-guest-btn" onClick={() => setShowForm(true)}>
-                  {/* Plus-icoon van Font Awesome */}
                   <i className="fa-solid fa-plus"></i>
                 </button>
               </div>
@@ -160,7 +159,7 @@ function App() {
               <td>{guest.address}</td>
               <td>
                 <button className="delete-btn" onClick={() => deleteGuest(guest.id)}>
-                  Gast verwijderen
+                  <i className="fa-solid fa-trash"></i>
                 </button>
               </td>
             </tr>
