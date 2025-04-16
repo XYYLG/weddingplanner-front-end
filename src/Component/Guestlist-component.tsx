@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-import Navbar from '../Pages/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css';
+
 
 interface Guest {
     id: string;
@@ -116,7 +116,6 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <Navbar />
             <div className="guests-container">
                 <h1>Gasten Overzicht</h1>
                 {showForm && (
