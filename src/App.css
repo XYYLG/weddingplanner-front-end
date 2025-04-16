@@ -23,16 +23,18 @@ body {
 }
 
 .guests-container h1 {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #fff;
+  color: #333;
   padding: 15px 20px;
   margin: 0;
   font-size: 1.5em;
+  border-bottom: 1px solid #ddd;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  background-color: #fff;
 }
 
 table th,
