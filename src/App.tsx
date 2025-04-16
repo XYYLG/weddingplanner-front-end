@@ -1,38 +1,40 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Navbar from './Pages/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  const [guests, setGuests] = useState<
-    { id: string; firstName: string; lastName: string; phoneNumber: string; address: string }[]
-  >([]);
+interface Guest {
+  id: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  address: string;
+}
 
-  const [newGuest, setNewGuest] = useState({
+const App: React.FC = () => {
+  const [guests, setGuests] = useState<Guest[]>([]);
+  const [newGuest, setNewGuest] = useState<Omit<Guest, 'id'>>({
     firstName: '',
     lastName: '',
     phoneNumber: '',
     address: '',
   });
 
-  const [editGuest, setEditGuest] = useState<null | { id: string; firstName: string; lastName: string; phoneNumber: string; address: string }>(null);
+  const [editGuest, setEditGuest] = useState<Guest | null>(null);
   const [showForm, setShowForm] = useState(false);
 
   const makeAPICall = async (): Promise<void> => {
     try {
       const response = await fetch('http://localhost:3000/guest', { mode: 'cors' });
       if (!response.ok) throw new Error('Fout bij ophalen van gegevens!');
-      const data = await response.json();
+      const data: Guest[] = await response.json();
       setGuests(data);
     } catch (e) {
       console.error('Fout bij ophalen van gegevens:', e);
     }
   };
 
-  const createGuest = async (guest: {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address: string;
-  }): Promise<void> => {
+  const createGuest = async (guest: Omit<Guest, 'id'>): Promise<void> => {
     try {
       const response = await fetch('http://localhost:3000/guest', {
         method: 'POST',
@@ -49,12 +51,7 @@ function App() {
     }
   };
 
-  const updateGuest = async (id: string, guest: {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address: string;
-  }): Promise<void> => {
+  const updateGuest = async (id: string, guest: Omit<Guest, 'id'>): Promise<void> => {
     try {
       const response = await fetch(`http://localhost:3000/guest/${id}`, {
         method: 'PUT',
@@ -107,7 +104,7 @@ function App() {
     }
   };
 
-  const handleEditClick = (guest: { id: string; firstName: string; lastName: string; phoneNumber: string; address: string }) => {
+  const handleEditClick = (guest: Guest) => {
     setNewGuest({ firstName: guest.firstName, lastName: guest.lastName, phoneNumber: guest.phoneNumber, address: guest.address });
     setEditGuest(guest);
     setShowForm(true);
@@ -118,93 +115,96 @@ function App() {
   }, []);
 
   return (
-    <div className="guests-container">
-      <h1>Gasten Overzicht</h1>
-      {showForm && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>{editGuest ? 'Gast Bijwerken' : 'Nieuwe Gast Aanmaken'}</h2>
-            <form onSubmit={handleFormSubmit}>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="Voornaam"
-                value={newGuest.firstName}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Achternaam"
-                value={newGuest.lastName}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="phoneNumber"
-                placeholder="Telefoonnummer"
-                value={newGuest.phoneNumber}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="address"
-                placeholder="Adres"
-                value={newGuest.address}
-                onChange={handleInputChange}
-                required
-              />
-              <button type="submit">Opslaan</button>
-              <button type="button" onClick={() => { setShowForm(false); setEditGuest(null); }}>
-                Annuleren
-              </button>
-            </form>
+    <div className="App">
+      <Navbar />
+      <div className="guests-container">
+        <h1>Gasten Overzicht</h1>
+        {showForm && (
+          <div className="modal">
+            <div className="modal-content">
+              <h2>{editGuest ? 'Gast Bijwerken' : 'Nieuwe Gast Aanmaken'}</h2>
+              <form onSubmit={handleFormSubmit}>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="Voornaam"
+                  value={newGuest.firstName}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Achternaam"
+                  value={newGuest.lastName}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="Telefoonnummer"
+                  value={newGuest.phoneNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Adres"
+                  value={newGuest.address}
+                  onChange={handleInputChange}
+                  required
+                />
+                <button type="submit">Opslaan</button>
+                <button type="button" onClick={() => { setShowForm(false); setEditGuest(null); }}>
+                  Annuleren
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
-      )}
-      <table>
-        <thead>
-          <tr>
-            <th colSpan={5}>
-              <div className="table-header">
-                <button className="add-guest-btn" onClick={() => setShowForm(true)}>
-                  <i className="fa-solid fa-plus"></i>
-                </button>
-              </div>
-            </th>
-          </tr>
-          <tr>
-            <th>Voornaam</th>
-            <th>Achternaam</th>
-            <th>Telefoonnummer</th>
-            <th>Adres</th>
-            <th>Acties</th>
-          </tr>
-        </thead>
-        <tbody>
-          {guests.map((guest) => (
-            <tr key={guest.id}>
-              <td>{guest.firstName}</td>
-              <td>{guest.lastName}</td>
-              <td>{guest.phoneNumber}</td>
-              <td>{guest.address}</td>
-              <td>
-                <button className="edit-btn" onClick={() => handleEditClick(guest)}>
-                  <i className="fa-solid fa-pencil"></i>
-                </button>
-                <button className="delete-btn" onClick={() => deleteGuest(guest.id)}>
-                  <i className="fa-solid fa-trash"></i>
-                </button>
-              </td>
+        )}
+        <table>
+          <thead>
+            <tr>
+              <th colSpan={5}>
+                <div className="table-header">
+                  <button className="add-guest-btn" onClick={() => setShowForm(true)}>
+                    <i className="fa-solid fa-plus"></i>
+                  </button>
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            <tr>
+              <th>Voornaam</th>
+              <th>Achternaam</th>
+              <th>Telefoonnummer</th>
+              <th>Adres</th>
+              <th>Acties</th>
+            </tr>
+          </thead>
+          <tbody>
+            {guests.map((guest) => (
+              <tr key={guest.id}>
+                <td>{guest.firstName}</td>
+                <td>{guest.lastName}</td>
+                <td>{guest.phoneNumber}</td>
+                <td>{guest.address}</td>
+                <td>
+                  <button className="edit-btn" onClick={() => handleEditClick(guest)}>
+                    <i className="fa-solid fa-pencil"></i>
+                  </button>
+                  <button className="delete-btn" onClick={() => deleteGuest(guest.id)}>
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
