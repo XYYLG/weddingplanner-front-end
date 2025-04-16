@@ -1,39 +1,28 @@
 import React from 'react';
 import './Home.css';
-import Navbar from '../Component/Navbar';
+
+
 const Home: React.FC = () => {
     return (
         <div>
-            {/* Navbar */}
-            <Navbar />
-
-            {/* Hero Section */}
             <div className="hero-section">
                 <h1>Welkom bij Uw Weddingplanner</h1>
-                <p>Wij maken van uw droomdag een onvergetelijke realiteit.</p>
-                <button className="cta-button">Plan Nu Uw Bruiloft</button>
+                <p>Beheer eenvoudig uw gastenlijst en plan de perfecte dag.</p>
             </div>
 
-            {/* Services Section */}
-            <div className="services-section">
-                <h2>Onze Diensten</h2>
-                <div className="service-cards">
-                    <div className="card">
-                        <h3>Locatiekeuze</h3>
-                        <p>Wij helpen u bij het vinden van de perfecte locatie.</p>
-                    </div>
-                    <div className="card">
-                        <h3>Catering</h3>
-                        <p>Van elegante diners tot heerlijke hapjes, wij regelen het.</p>
-                    </div>
-                    <div className="card">
-                        <h3>Decoratie</h3>
-                        <p>Laat uw stijl en thema tot leven komen met onze decoratieservice.</p>
-                    </div>
-                </div>
+            <div className="feature-section">
+                <h2>Waarom onze gastenlijst?</h2>
+                <p>
+                    Met onze gastenlijst-tool kunt u eenvoudig uw gasten beheren, uitnodigingen versturen
+                    en ervoor zorgen dat iedereen op tijd aanwezig is op uw speciale dag.
+                </p>
+                <ul className="features-list">
+                    <li>✔ Voeg nieuwe gasten toe met gemak.</li>
+                    <li>✔ Bekijk en bewerk uw gastenlijst overal.</li>
+                    <li>✔ Houd adressen en contactgegevens georganiseerd.</li>
+                </ul>
             </div>
 
-            {/* Footer */}
             <footer className="footer">
                 <p>© 2025 Uw Weddingplanner. Alle rechten voorbehouden.</p>
             </footer>
