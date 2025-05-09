@@ -24,7 +24,7 @@ const App: React.FC = () => {
 
     const makeAPICall = async (): Promise<void> => {
         try {
-            const response = await fetch('http://localhost:8080/guest', { mode: 'cors' });
+            const response = await fetch('http://localhost:8081/guest', { mode: 'cors' });
             if (!response.ok) throw new Error('Fout bij ophalen van gegevens!');
             const data: Guest[] = await response.json();
             setGuests(data);
@@ -35,7 +35,7 @@ const App: React.FC = () => {
 
     const createGuest = async (guest: Omit<Guest, 'id'>): Promise<void> => {
         try {
-            const response = await fetch('http://localhost:8080/guest', {
+            const response = await fetch('http://localhost:8081/guest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const App: React.FC = () => {
 
     const updateGuest = async (id: string, guest: Omit<Guest, 'id'>): Promise<void> => {
         try {
-            const response = await fetch(`http://localhost:8080/guest/${id}`, {
+            const response = await fetch(`http://localhost:8081/guest/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const App: React.FC = () => {
 
     const deleteGuest = async (id: string): Promise<void> => {
         try {
-            const response = await fetch(`http://localhost:8080/guest/${id}`, {
+            const response = await fetch(`http://localhost:8081/guest/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
