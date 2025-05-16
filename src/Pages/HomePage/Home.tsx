@@ -21,6 +21,11 @@ const Home: React.FC = () => {
                     <li>✔ Bekijk en bewerk uw gastenlijst overal.</li>
                     <li>✔ Houd adressen en contactgegevens georganiseerd.</li>
                 </ul>
+                <ul className="features-list">
+                    <li>✔ Voeg nieuwe bedragen toe met gemak.</li>
+                    <li>✔ Bekijk en bewerk uw financiële overzicht overal.</li>
+                    <li>✔ Houd uw uitgaven en inkomsten georganiseerd.</li>
+                </ul>
             </div>
 
             <footer className="footer">
