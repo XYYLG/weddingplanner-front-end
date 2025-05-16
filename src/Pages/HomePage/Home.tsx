@@ -1,10 +1,12 @@
 import React from 'react';
+import NavBar from '../../Component/Navbar';
 import './Home.css';
 
 
 const Home: React.FC = () => {
     return (
         <div>
+            <NavBar />
             <div className="hero-section">
                 <h1>Welkom bij Uw Weddingplanner</h1>
                 <p>Beheer eenvoudig uw gastenlijst en plan de perfecte dag.</p>

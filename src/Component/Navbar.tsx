@@ -22,10 +22,10 @@ const Navbar: React.FC = () => {
                         <Link className="nav-link" to="/">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/Guestlist-component">Gastenlijst</Link>
+                        <Link className="nav-link" to="/Guest">Gastenlijst</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/FinanceOverview-component">Financiele overzicht</Link>
+                        <Link className="nav-link" to="/FinanceOverview">Financiële overzicht</Link>
                     </li>
                 </ul>
             </div>

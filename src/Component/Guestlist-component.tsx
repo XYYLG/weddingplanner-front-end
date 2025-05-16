@@ -10,7 +10,7 @@ interface Guest {
     address: string;
 }
 
-const App: React.FC = () => {
+const GuestList: React.FC = () => {
     const [guests, setGuests] = useState<Guest[]>([]);
     const [newGuest, setNewGuest] = useState<Omit<Guest, 'id'>>({
         firstName: '',
@@ -205,4 +205,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default GuestList;

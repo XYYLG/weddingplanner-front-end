@@ -1,20 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './HomePage/Home';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import FinanceOverview from './FinanceOverview/FinanceOverview';
-import Guest from './GuestList/Guest';
+import { useState, useEffect } from 'react';
+import Navbar from '../../Component/Navbar';
+import FinanceOverviewComponent from '../../Component/FinanceOverview-component';
+import './FinanceOverview.css';
 
-const App: React.FC = () => {
+function FinanceOverview() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/Guest" element={<Guest />} />
-                <Route path="/FinanceOverview" element={<FinanceOverview />} />
-            </Routes>
-        </Router>
+        <div className="FinanceOverview">
+            <Navbar />
+            <FinanceOverviewComponent />
+        </div>
     );
-};
-
-export default App;
+}
+export default FinanceOverview;

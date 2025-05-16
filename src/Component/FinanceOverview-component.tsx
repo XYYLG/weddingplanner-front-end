@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../Pages/FinanceOverview/FinanceOverview.css';
 
 interface Finance {
     id: string;
