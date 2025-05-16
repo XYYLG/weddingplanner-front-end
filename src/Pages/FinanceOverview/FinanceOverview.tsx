@@ -1,18 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from '../../Component/Navbar';
-import Home from '../HomePage/Home';
-import './App.css';
+import Home from './HomePage/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FinanceOverview from '../../Component/FinanceOverview-component';
+import FinanceOverview from './FinanceOverview/FinanceOverview';
+import Guest from './GuestList/Guest';
 
 const App: React.FC = () => {
     return (
         <Router>
-            <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/Finance-component" element={<FinanceOverview />} />
+                <Route path="/Guest" element={<Guest />} />
+                <Route path="/FinanceOverview" element={<FinanceOverview />} />
             </Routes>
         </Router>
     );

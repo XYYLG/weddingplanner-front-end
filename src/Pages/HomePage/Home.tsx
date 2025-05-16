@@ -11,7 +11,7 @@ const Home: React.FC = () => {
             </div>
 
             <div className="feature-section">
-                <h2>Waarom onze gastenlijst?</h2>
+                <h2>Waarom onze plannings applicatie?</h2>
                 <p>
                     Met onze gastenlijst-tool kunt u eenvoudig uw gasten beheren, uitnodigingen versturen
                     en ervoor zorgen dat iedereen op tijd aanwezig is op uw speciale dag.
