@@ -9,7 +9,7 @@ const Home: React.FC = () => {
             <NavBar />
             <div className="hero-section">
                 <h1>Welkom bij Uw Weddingplanner</h1>
-                <p>Beheer eenvoudig uw gastenlijst en plan de perfecte dag.</p>
+                <p>Beheer eenvoudig uw gegevens en plan de perfecte dag.</p>
             </div>
 
             <div className="feature-section">
