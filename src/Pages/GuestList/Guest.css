@@ -13,7 +13,7 @@ body {
   text-align: center;
 }
 
-.guests-container {
+.container {
   margin: 0 auto;
   background: #fff;
   border-radius: 8px;
@@ -22,7 +22,7 @@ body {
   display: inline-block;
 }
 
-.guests-container h1 {
+.container h1 {
   background-color: #fff;
   color: #333;
   padding: 15px 20px;

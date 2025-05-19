@@ -5,23 +5,6 @@ body {
     background-color: white;
 }
 
-.hero-section {
-    background-color: white;
-    text-align: center;
-    color: black;
-    padding: 100px 20px;
-}
-
-.hero-section h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    color: black;
-}
-
-.hero-section p {
-    font-size: 24px;
-    color: black;
-}
 
 .cta-button {
     padding: 15px 30px;
