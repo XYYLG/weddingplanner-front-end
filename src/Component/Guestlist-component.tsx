@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 interface Guest {
     id: string;
     firstName: string;
@@ -90,14 +89,23 @@ const GuestList: React.FC = () => {
 
     const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log("Formulier verzonden!"); // Debug-log toegevoegd
+
         if (newGuest.firstName && newGuest.lastName && newGuest.phoneNumber && newGuest.address) {
-            if (editGuest) {
-                await updateGuest(editGuest.id, newGuest);
-            } else {
-                await createGuest(newGuest);
+            console.log("Gastgegevens:", newGuest); // Laat zien wat wordt verzonden
+
+            try {
+                if (editGuest) {
+                    await updateGuest(editGuest.id, newGuest);
+                } else {
+                    await createGuest(newGuest);
+                }
+                setNewGuest({ firstName: '', lastName: '', phoneNumber: '', address: '' });
+                setEditGuest(null);
+                setShowForm(false); // Sluit de modal na een succesvolle actie
+            } catch (error) {
+                console.error("Fout bij opslaan:", error);
             }
-            setNewGuest({ firstName: '', lastName: '', phoneNumber: '', address: '' });
-            setEditGuest(null);
         } else {
             console.error('Alle velden zijn verplicht!');
         }
@@ -167,8 +175,11 @@ const GuestList: React.FC = () => {
                         <tr>
                             <th colSpan={5}>
                                 <div className="table-header">
-                                    <button className="add-guest-btn" onClick={() => setShowForm(true)}>
-                                        <i className="fa-solid fa-plus"></i>
+                                    <button className="add-guest-btn" onClick={() => {
+                                        console.log("Toevoegen-knop ingedrukt!"); // Debugging
+                                        setShowForm(true);
+                                    }}>
+                                        <i className="fa-solid fa-plus"></i> Nieuwe gast toevoegen
                                     </button>
                                 </div>
                             </th>

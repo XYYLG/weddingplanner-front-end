@@ -1,15 +1,19 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import Navbar from '../../Component/Navbar';
 import FinanceOverviewComponent from '../../Component/FinanceOverview-component';
 import './FinanceOverview.css';
 
-function FinanceOverview() {
+const FinanceOverview: React.FC = () => {
     return (
         <div className="FinanceOverview">
             <Navbar />
-            <FinanceOverviewComponent />
+            <div className="page-wrapper">
+                <div className="container">
+                    <FinanceOverviewComponent />
+                </div>
+            </div>
         </div>
     );
-}
+};
+
 export default FinanceOverview;
