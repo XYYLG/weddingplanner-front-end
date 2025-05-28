@@ -176,7 +176,6 @@ const GuestList: React.FC = () => {
                             <th colSpan={5}>
                                 <div className="table-header">
                                     <button className="add-guest-btn" onClick={() => {
-                                        console.log("Toevoegen-knop ingedrukt!"); // Debugging
                                         setShowForm(true);
                                     }}>
                                         <i className="fa-solid fa-plus"></i> Nieuwe gast toevoegen
