@@ -13,22 +13,47 @@ describe('Guest Management E2E Test', () => {
 
         // Act
         cy.contains('Opslaan').click();
+    });
 
-        // Assert
-        //  cy.request('GET').its('body').should('deep.include', {
-        //    firstName: 'Test',
-        //  lastName: 'Gebruiker',
-        // phoneNumber: '0612345678',
-        // address: 'Straat 123, Stad'
+    it('Moet een gast kunnen verwijderen', () => {
+        // Zorg ervoor dat er een gast bestaat
+        cy.get('table tbody tr').should('exist');
+
+        // Arrange
+        cy.get('table tbody tr').first().within(() => {
+            cy.get('.delete-btn').should('be.visible').click();
+        });
+
+        // Act
+        cy.wait(500);
     });
 });
 
-it('Moet een gast kunnen verwijderen', () => {
+it('Moet een gast kunnen bewerken', () => {
+    // Zorg ervoor dat er een gast bestaat
+    cy.get('table tbody tr').should('exist');
     // Arrange
     cy.get('table tbody tr').first().within(() => {
-        cy.get('.delete-btn').click();
+        cy.get('.edit-btn').should('be.visible').click();
     });
 
+    // Wijzig gegevens
+    cy.get('input[name="firstName"]').clear().type('Bewerkte Test');
+    cy.get('input[name="lastName"]').clear().type('Gebruiker');
+    cy.get('input[name="phoneNumber"]').clear().type('0698765432');
+    cy.get('input[name="address"]').clear().type('Nieuwe Straat 456, Stad');
+
     // Act
-    cy.wait(500);
+    cy.contains('Opslaan').click();
+    cy.wait('@updateGuest'); // Wacht op API-call
+    cy.get('table tbody tr').should('exist'); // Controleer of de gast correct is bijgewerkt
+
+
+    // Assert
+    cy.get('table tbody tr').first().within(() => {
+        cy.contains('Bewerkte Test').should('exist');
+        cy.contains('0698765432').should('exist');
+        cy.contains('Nieuwe Straat 456, Stad').should('exist');
+        cy.contains('Gebruiker').should('exist');
+    });
 });
