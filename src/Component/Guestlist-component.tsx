@@ -54,7 +54,6 @@ const GuestList: React.FC = () => {
         }
     };
 
-    // Functie om een gast bij te werken
     const updateGuest = async (id: string, updatedGuest: Omit<Guest, 'id'>) => {
         try {
             const response = await fetch(`http://localhost:8081/guest/${id}`, {
@@ -71,7 +70,6 @@ const GuestList: React.FC = () => {
         }
     };
 
-    // Functie om een gast aan te maken
     const createGuest = async (guest: Omit<Guest, 'id'>) => {
         try {
             const response = await fetch('http://localhost:8081/guest', {
@@ -103,7 +101,6 @@ const GuestList: React.FC = () => {
         setShowForm(true);
     }
 
-    // Functie om een gast te verwijderen
     const deleteGuest = async (id: string) => {
         try {
             const response = await fetch(`http://localhost:8081/guest/${id}`, {
