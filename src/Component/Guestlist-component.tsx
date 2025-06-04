@@ -90,13 +90,11 @@ const GuestList: React.FC = () => {
         makeAPICall();
     }, []);
 
-    let globalSocket: WebSocket | null = null;
+    let globalSocket: WebSocket | null = null; // Declare global WebSocket variable
 
     useEffect(() => {
 
-        console.log(' useEffect gestart - initialiseren van WebSocket');
-
-        // Alleen als er nog geen socket is
+        console.log('useEffect gestart - initialiseren van WebSocket');
 
         if (!globalSocket || globalSocket.readyState === WebSocket.CLOSED) {
 
@@ -122,47 +120,45 @@ const GuestList: React.FC = () => {
 
                 if (data.success && data.guest) {
 
-                    console.log(' Gast toegevoegd vanuit WebSocket:', data.guest);
+                    console.log('Gast toegevoegd vanuit WebSocket:', data.guest);
 
-                    setGuests((prev) => [data.guest, ...prev]);
+                    setGuests((prev) => {
+
+                        const exists = prev.some(g => g.id === data.guest.id);
+
+                        if (exists) {
+                            return prev; // geen dubbele gast toevoegen
+                        } else {
+                            return [data.guest, ...prev];
+                        }
+
+                    });
 
                 } else if (!data.success) {
-
-                    console.error(' WebSocket foutmelding ontvangen:', data.error);
-
+                    console.error('WebSocket foutmelding ontvangen:', data.error);
                 }
 
             } catch (err) {
-
-                console.error(' Fout bij parsen van WebSocket-bericht:', err);
-
+                console.error('Fout bij parsen van WebSocket-bericht:', err);
             }
-
         });
 
         globalSocket.addEventListener('close', (event) => {
-
-            console.warn(`🔌 WebSocket verbinding gesloten (code: ${event.code})`);
-
+            console.warn(`WebSocket verbinding gesloten (code: ${event.code})`);
         });
 
         globalSocket.addEventListener('error', (error) => {
-
             console.error('WebSocket fout:', error);
-
         });
 
-        // Voor debugging: socket niet direct sluiten
-
         return () => {
-
             console.log('useEffect cleaning up. Socket blijft tijdelijk open voor debug.');
-
-            // globalSocket?.close(); // tijdelijk uitgecommentarieerd voor debug
 
         };
 
     }, []);
+
+
 
     function handleEditClick(guest: Guest): void {
         setEditGuest(guest);
