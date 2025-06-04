@@ -90,6 +90,41 @@ const GuestList: React.FC = () => {
         makeAPICall();
     }, []);
 
+    useEffect(() => {
+        const socket = new WebSocket('ws://localhost:8082'); // connectie naar je WS-server
+        socket.addEventListener('open', () => {
+            console.log('WebSocket verbonden');
+        });
+
+        socket.addEventListener('message', (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.success && data.guest) {
+                    // Voeg nieuw ontvangen gast toe aan de lijst
+                    setGuests((prev) => [data.guest, ...prev]);
+                } else if (!data.success) {
+                    console.error('WebSocket error:', data.error);
+                }
+            } catch (err) {
+                console.error('Fout bij verwerken WS bericht:', err);
+            }
+        });
+
+        socket.addEventListener('close', () => {
+            console.log('WebSocket verbinding gesloten');
+        });
+        socket.addEventListener('error', (error) => {
+            console.error('WebSocket fout:', error);
+        });
+
+        return () => {
+            socket.close();
+        };
+
+    }, []);
+
+
+
     function handleEditClick(guest: Guest): void {
         setEditGuest(guest);
         setNewGuest({
