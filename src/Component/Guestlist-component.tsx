@@ -90,40 +90,79 @@ const GuestList: React.FC = () => {
         makeAPICall();
     }, []);
 
+    let globalSocket: WebSocket | null = null;
+
     useEffect(() => {
-        const socket = new WebSocket('ws://localhost:8082'); // connectie naar je WS-server
-        socket.addEventListener('open', () => {
+
+        console.log(' useEffect gestart - initialiseren van WebSocket');
+
+        // Alleen als er nog geen socket is
+
+        if (!globalSocket || globalSocket.readyState === WebSocket.CLOSED) {
+
+            globalSocket = new WebSocket('ws://localhost:8082');
+
+            console.log('WebSocket aangemaakt');
+
+        }
+
+        globalSocket.addEventListener('open', () => {
+
             console.log('WebSocket verbonden');
+
         });
 
-        socket.addEventListener('message', (event) => {
+        globalSocket.addEventListener('message', (event) => {
+
+            console.log('Bericht ontvangen van WS-server:', event.data);
+
             try {
+
                 const data = JSON.parse(event.data);
+
                 if (data.success && data.guest) {
-                    // Voeg nieuw ontvangen gast toe aan de lijst
+
+                    console.log(' Gast toegevoegd vanuit WebSocket:', data.guest);
+
                     setGuests((prev) => [data.guest, ...prev]);
+
                 } else if (!data.success) {
-                    console.error('WebSocket error:', data.error);
+
+                    console.error(' WebSocket foutmelding ontvangen:', data.error);
+
                 }
+
             } catch (err) {
-                console.error('Fout bij verwerken WS bericht:', err);
+
+                console.error(' Fout bij parsen van WebSocket-bericht:', err);
+
             }
+
         });
 
-        socket.addEventListener('close', () => {
-            console.log('WebSocket verbinding gesloten');
+        globalSocket.addEventListener('close', (event) => {
+
+            console.warn(`🔌 WebSocket verbinding gesloten (code: ${event.code})`);
+
         });
-        socket.addEventListener('error', (error) => {
+
+        globalSocket.addEventListener('error', (error) => {
+
             console.error('WebSocket fout:', error);
+
         });
+
+        // Voor debugging: socket niet direct sluiten
 
         return () => {
-            socket.close();
+
+            console.log('useEffect cleaning up. Socket blijft tijdelijk open voor debug.');
+
+            // globalSocket?.close(); // tijdelijk uitgecommentarieerd voor debug
+
         };
 
     }, []);
-
-
 
     function handleEditClick(guest: Guest): void {
         setEditGuest(guest);
