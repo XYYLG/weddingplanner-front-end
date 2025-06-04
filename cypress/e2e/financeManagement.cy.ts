@@ -8,7 +8,7 @@ describe('Finance Management E2E Test', () => {
 
     it('Moet een nieuw bedrag kunnen toevoegen', () => {
         // Open formulier
-        cy.get('.add-finance-btn').should('be.visible').click();
+        cy.get('.btn-success').should('be.visible').click();
 
         // Vul gegevens in
         cy.get('input[name="amountPayed"]').type('100');
@@ -28,7 +28,7 @@ describe('Finance Management E2E Test', () => {
 
         // Open bewerkingsformulier
         cy.get('table tbody tr').first().within(() => {
-            cy.get('.edit-btn').should('be.visible').click();
+            cy.get('.btn-warning').should('be.visible').click();
         });
 
         // Wijzig gegevens
@@ -51,15 +51,16 @@ describe('Finance Management E2E Test', () => {
     });
 
     it('Moet een bedrag kunnen verwijderen', () => {
-        // Zorg ervoor dat er een gast bestaat
+        // Zorg ervoor dat er een bedrag bestaat
         cy.get('table tbody tr').should('exist');
 
         // Arrange
         cy.get('table tbody tr').first().within(() => {
-            cy.get('.delete-btn').should('be.visible').click();
+            cy.get('.btn-danger').should('be.visible').click();
         });
 
         // Act
-        cy.wait(500);
+        cy.wait('@deleteAmount');
+        cy.get('table tbody tr').should('not.exist'); // Controleer of het verwijderd is
     });
 });
