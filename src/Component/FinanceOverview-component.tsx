@@ -60,6 +60,8 @@ const FinanceOverview: React.FC = () => {
         }
     };
 
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
     const createFinance = async (finance: Omit<Finance, 'id'>) => {
         try {
             const response = await fetch('http://localhost:8081/finance', {
@@ -67,12 +69,21 @@ const FinanceOverview: React.FC = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(finance),
             });
+
             if (!response.ok) throw new Error('Fout bij toevoegen van gegevens!');
             await fetchFinances();
+            setErrorMessage(null); // Reset foutmelding bij succes
         } catch (e) {
-            console.error('Fout bij toevoegen van gegevens:', e);
+            if (e instanceof Error) {
+                console.log("Fout gevonden:", e.message); // Debugging log
+            } else {
+                console.log("Fout gevonden:", e); // Debugging log
+            }
+            setErrorMessage('Fout bij toevoegen van gegevens'); // Zorg dat de foutmelding zichtbaar wordt
         }
     };
+
+
 
     const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -130,6 +141,8 @@ const FinanceOverview: React.FC = () => {
                 <div className="modal fade show d-block">
                     <div className="modal-dialog">
                         <div className="modal-content p-4">
+                            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+                            console.log("Huidige foutmelding state:", errorMessage);
                             <h2>{editFinance ? 'Bedrag Bijwerken' : 'Nieuw Bedrag Toevoegen'}</h2>
                             <form onSubmit={handleFormSubmit}>
                                 <div className="mb-3">
